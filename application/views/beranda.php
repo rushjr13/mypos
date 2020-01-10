@@ -13,11 +13,11 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
-	
+
 <div class="wrapper">
   <header class="main-header">
     <a href="<?=base_url()?>" class="logo">
-      <span class="logo-mini"><b>MK</b>pos</span>
+      <span class="logo-mini"><b>MK</b></span>
       <span class="logo-lg"><b>Makaleka</b>POS</span>
     </a>
     <nav class="navbar navbar-static-top">
@@ -57,7 +57,7 @@
 
                 <p>
                   Administrator - Admin
-                  <small>Member Seja Januari 2010</small>
+                  <small>Member Sejak Januari 2010</small>
                 </p>
               </li>
               <li class="user-footer">
