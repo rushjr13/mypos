@@ -5,6 +5,8 @@ class Beranda extends CI_Controller {
 
 	public function index()
 	{
-		$this->load->view('beranda');
+		$data['judul'] = "Beranda";
+		$data['subjudul'] = "Makaleka POS v.1.0.0";
+		$this->template->load('template', 'beranda', $data);
 	}
 }
