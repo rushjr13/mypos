@@ -17,6 +17,7 @@
   <div class="login-logo">
     <a href="<?=base_url()?>"><b>Makaleka</b>POS</a>
   </div>
+  <?= $this->session->flashdata('sukses'); ?>
   <div class="login-box-body">
     <?=$contents ?>
   </div>
