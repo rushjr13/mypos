@@ -100,7 +100,7 @@
         </div>
         <div class="pull-left info">
           <p><?=$pengguna_masuk['nama_lengkap'] ?></p>
-          <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+          <a href="#" data-toggle="modal" data-target="#modalKeluar"><i class="fa fa-circle text-success"></i> Online</a>
         </div>
       </div>
       <!-- <form action="#" method="get" class="sidebar-form">
@@ -158,8 +158,10 @@
             <li class="<?php if($judul=='Stok'){echo 'active';} ?>"><a href="<?=base_url('laporan/stok') ?>"><i class="fa fa-circle-o"></i> Stok</a></li>
           </ul>
         </li>
-        <li class="header">PENGATURAN</li>
-        <li class="<?php if($judul=='Pengguna'){echo 'active';} ?>"><a href="<?=base_url('pengguna') ?>"><i class="fa fa-users"></i> <span>Pengguna</span></a></li>
+        <?php if($pengguna_masuk['level']==1){ ?>
+          <li class="header">PENGATURAN</li>
+          <li class="<?php if($judul=='Pengguna'){echo 'active';} ?>"><a href="<?=base_url('pengguna') ?>"><i class="fa fa-users"></i> <span>Pengguna</span></a></li>
+        <?php } ?>
       </ul>
     </section>
   </aside>
@@ -178,6 +180,7 @@
       </ol>
     </section>
     <section class="content">
+      <?= $this->session->flashdata('info'); ?>
       <?=$contents ?>
     </section>
   </div>
