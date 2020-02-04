@@ -10,7 +10,11 @@ class Auth extends CI_Controller {
 
 	public function index()
 	{
+    // UMUM
     cek_sudah_masuk();
+		$data['pengaturan'] = $this->pengaturan->get();
+
+		// KHUSUS
 		$data['judul'] = "Masuk";
 		$this->template->load('auth/template', 'auth/masuk', $data);
 	}
@@ -26,23 +30,27 @@ class Auth extends CI_Controller {
 				if($row['status_pengguna']=="Aktif"){
 					$this->session->set_userdata('username', $username);
 					$this->session->set_flashdata('info', '<div class="callout callout-success">
-	                																	<h4>Anda Berhasil Masuk!</h4>
+	                																	<h4><i class="icon fa fa-check"></i> Anda Berhasil Masuk!</h4>
 																		                <p>Selamat datang <strong>'.$row['nama_lengkap'].'</strong>. Kami senang melihat Anda kembali.</p>
 																		              </div>');
-					redirect('pengguna/profil/'.$username);
+					if($row['level']==1){
+						redirect('pengguna/profil/'.$username);
+					}else{
+						redirect('penjualan');
+					}
 				}else{
 					$this->session->set_flashdata('info', '<div class="callout callout-danger">
-	                																	<h4>Gagal Masuk!</h4>
+	                																	<h4><i class="icon fa fa-ban"></i> Gagal Masuk!</h4>
 																		                <p>Akun Anda (<strong>'.$username.'</strong>) belum aktif. Silahkan hubungi Administator untuk aktivasi akun Anda.</p>
 																		              </div>');
-					redirect('auth');
+					redirect('masuk');
 				}
 			}else{
 				$this->session->set_flashdata('info', '<div class="callout callout-danger">
-                																	<h4>Gagal Masuk!</h4>
+                																	<h4><i class="icon fa fa-ban"></i> Gagal Masuk!</h4>
 																	                <p>Nama Pengguna / Kata Sandi salah!</p>
 																	              </div>');
-				redirect('auth');
+				redirect('masuk');
 			}
 		}else if(isset($post['daftar'])){
 			echo "proses daftar";
@@ -53,14 +61,22 @@ class Auth extends CI_Controller {
 
 	public function daftar()
 	{
+    // UMUM
     cek_sudah_masuk();
+		$data['pengaturan'] = $this->pengaturan->get();
+
+		// KHUSUS
 		$data['judul'] = "Daftar";
 		$this->template->load('auth/template', 'auth/daftar', $data);
 	}
 
 	public function lupa_sandi()
 	{
+    // UMUM
     cek_sudah_masuk();
+		$data['pengaturan'] = $this->pengaturan->get();
+
+		// KHUSUS
 		$data['judul'] = "Lupa Kata Sandi";
 		$this->template->load('auth/template', 'auth/lupa_sandi', $data);
 	}
@@ -69,8 +85,8 @@ class Auth extends CI_Controller {
 	{
 		$this->session->unset_userdata('username');
 		$this->session->set_flashdata('info', '<div class="callout callout-success">
-															                <p>Anda telah keluar.</p>
+															                <p><i class="fa fa-check"></i> Anda telah keluar.</p>
 															              </div>');
-		redirect('auth');
+		redirect('masuk');
 	}
 }

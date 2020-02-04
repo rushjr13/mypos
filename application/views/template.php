@@ -3,8 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>POS - Makaleka || <?=$judul ?></title>
+  <title><?=$pengaturan['nama_aplikasi'] ?>POS || <?=$judul ?></title>
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <link rel="shortcut icon" href="<?=base_url('uploads/').$pengaturan['icon'] ?>">
   <link rel="stylesheet" href="<?=base_url()?>assets/bower_components/bootstrap/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="<?=base_url()?>assets/bower_components/font-awesome/css/font-awesome.min.css">
   <link rel="stylesheet" href="<?=base_url()?>assets/bower_components/Ionicons/css/ionicons.min.css">
@@ -16,15 +17,17 @@
   <link rel="stylesheet" href="<?=base_url()?>assets/bower_components/select2/dist/css/select2.min.css">
   <link rel="stylesheet" href="<?=base_url()?>assets/dist/css/AdminLTE.min.css">
   <link rel="stylesheet" href="<?=base_url()?>assets/dist/css/skins/_all-skins.min.css">
+  <link rel="stylesheet" href="<?=base_url()?>assets/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
+  <link rel="stylesheet" href="<?=base_url()?>assets/bower_components/select2/dist/css/select2.min.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
-<body class="hold-transition skin-blue sidebar-mini">
+<body class="hold-transition skin-blue sidebar-mini <?php if($judul=='Penjualan' || $subjudul=='Saldo Kas'){echo 'sidebar-collapse';} ?>">
 
 <div class="wrapper">
   <header class="main-header">
-    <a href="<?=base_url()?>" class="logo">
-      <span class="logo-mini"><b>MK</b></span>
-      <span class="logo-lg"><b>Makaleka</b>POS</span>
+    <a href="<?=base_url('beranda')?>" class="logo">
+      <span class="logo-mini"><img src="<?=base_url('uploads/').$pengaturan['icon'] ?>"></span>
+      <span class="logo-lg"><img src="<?=base_url('uploads/').$pengaturan['icon'] ?>"><b><?=$pengaturan['nama_aplikasi'] ?></b>POS</span>
     </a>
     <nav class="navbar navbar-static-top">
       <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
@@ -70,7 +73,7 @@
                 <?php } ?>
                 <p>
                   <?=$pengguna_masuk['nama_lengkap'] ?> (<?=$pengguna_masuk['nama_level'] ?>)
-                  <!-- <small>Terdaftar Sejak <?=date('Y', $pengguna_masuk['tgl_masuk']) ?></small> -->
+                  <small>Aktif Sejak <?=tgl_indolengkaptime($pengguna_masuk['tgl_masuk']) ?></small>
                 </p>
               </li>
               <li class="user-footer">
@@ -78,7 +81,7 @@
                   <a href="<?=base_url('pengguna/profil/').$pengguna_masuk['username'] ?>" class="btn btn-success btn-flat"><i class="fa fa-user"></i> Profil</a>
                 </div>
                 <div class="pull-right">
-                  <button type="button" id="keluar" data-toggle="modal" data-target="#modalKeluar" class="btn btn-danger btn-flat"><i class="fa fa-sign-out"></i> Keluar</button>
+                  <button type="button" id="keluar" data-toggle="modal" data-target="#modalKeluar" class="btn btn-danger btn-flat">Keluar <i class="fa fa-sign-out"></i></button>
                 </div>
               </li>
             </ul>
@@ -93,10 +96,10 @@
       <div class="user-panel">
         <div class="pull-left image">
           <?php if($pengguna_masuk['foto']==null){ ?>
-                <img src="<?=base_url('uploads/pengguna/user.png')?>" class="img-circle" alt="Foto <?=$pengguna_masuk['nama_lengkap'] ?>">
-              <?php }else{ ?>
-                <img src="<?=base_url('uploads/pengguna/').$pengguna_masuk['foto'] ?>" class="img-circle" alt="Foto <?=$pengguna_masuk['nama_lengkap'] ?>">
-              <?php } ?>
+            <img src="<?=base_url('uploads/pengguna/user.png')?>" class="img-circle" alt="Foto <?=$pengguna_masuk['nama_lengkap'] ?>">
+          <?php }else{ ?>
+            <img src="<?=base_url('uploads/pengguna/').$pengguna_masuk['foto'] ?>" class="img-circle" alt="Foto <?=$pengguna_masuk['nama_lengkap'] ?>">
+          <?php } ?>
         </div>
         <div class="pull-left info">
           <p><?=$pengguna_masuk['nama_lengkap'] ?></p>
@@ -114,24 +117,26 @@
       </form> -->
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">MENU UTAMA</li>
-        <li class="<?php if($judul=='Beranda'){echo 'active';} ?>"><a href="<?=base_url() ?>"><i class="fa fa-home"></i> <span>Beranda</span></a></li>
-        <li class="<?php if($judul=='Supplier'){echo 'active';} ?>"><a href="<?=base_url('supplier') ?>"><i class="fa fa-truck"></i> <span>Supplier</span></a></li>
-        <li class="<?php if($judul=='Pelanggan'){echo 'active';} ?>"><a href="<?=base_url('pelanggan') ?>"><i class="fa fa-users"></i> <span>Pelanggan</span></a></li>
-        <li class="treeview <?php if($judul=='Kategori' || $judul=='Unit' || $judul=='item'){echo 'active';} ?>">
-          <a href="#">
-            <i class="fa fa-archive"></i>
-            <span>Produk</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li class="<?php if($judul=='Kategori'){echo 'active';} ?>"><a href="<?=base_url('produk/kategori') ?>"><i class="fa fa-circle-o"></i> Kategori</a></li>
-            <li class="<?php if($judul=='Unit'){echo 'active';} ?>"><a href="<?=base_url('produk/unit') ?>"><i class="fa fa-circle-o"></i> Unit</a></li>
-            <li class="<?php if($judul=='Item'){echo 'active';} ?>"><a href="<?=base_url('produk/item') ?>"><i class="fa fa-circle-o"></i> Item</a></li>
-          </ul>
-        </li>
-        <li class="treeview <?php if($judul=='Penjualan' || $judul=='Stok Masuk' || $judul=='Stok Keluar'){echo 'active';} ?>">
+        <li class="<?php if($judul=='Beranda'){echo 'active';} ?>"><a href="<?=base_url('beranda') ?>"><i class="fa fa-home"></i> <span>Beranda</span></a></li>
+        <?php if($pengguna_masuk['level']==1){ ?>
+          <li class="<?php if($judul=='Supplier'){echo 'active';} ?>"><a href="<?=base_url('supplier') ?>"><i class="fa fa-truck"></i> <span>Supplier</span></a></li>
+          <li class="<?php if($judul=='Pelanggan'){echo 'active';} ?>"><a href="<?=base_url('pelanggan') ?>"><i class="fa fa-users"></i> <span>Pelanggan</span></a></li>
+          <li class="treeview <?php if($judul=='Kategori' || $judul=='Unit' || $judul=='Item'){echo 'active';} ?>">
+            <a href="#">
+              <i class="fa fa-archive"></i>
+              <span>Produk</span>
+              <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+            </a>
+            <ul class="treeview-menu">
+              <li class="<?php if($judul=='Kategori'){echo 'active';} ?>"><a href="<?=base_url('kategori') ?>"><i class="fa fa-circle-o"></i> Kategori</a></li>
+              <li class="<?php if($judul=='Unit'){echo 'active';} ?>"><a href="<?=base_url('unit') ?>"><i class="fa fa-circle-o"></i> Unit</a></li>
+              <li class="<?php if($judul=='Item'){echo 'active';} ?>"><a href="<?=base_url('item') ?>"><i class="fa fa-circle-o"></i> Item</a></li>
+            </ul>
+          </li>
+        <?php } ?>
+        <li class="treeview <?php if($judul=='Penjualan' || $judul=='Stok Masuk' || $judul=='Stok Keluar' || $judul=='Pemasukan Lain' || $judul=='Pengeluaran'){echo 'active';} ?>">
           <a href="#">
             <i class="fa fa-shopping-cart"></i>
             <span>Transaksi</span>
@@ -140,27 +145,33 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li class="<?php if($judul=='Penjualan'){echo 'active';} ?>"><a href="<?=base_url('transaksi/penjualan') ?>"><i class="fa fa-circle-o"></i> Penjualan</a></li>
-            <li class="<?php if($judul=='Stok Masuk'){echo 'active';} ?>"><a href="<?=base_url('transaksi/stok_masuk') ?>"><i class="fa fa-circle-o"></i> Stok Masuk</a></li>
-            <li class="<?php if($judul=='Stok Keluar'){echo 'active';} ?>"><a href="<?=base_url('transaksi/stok_keluar') ?>"><i class="fa fa-circle-o"></i> Stok Keluar</a></li>
-          </ul>
-        </li>
-        <li class="treeview <?php if($judul=='Penjualan' || $judul=='Stok'){echo 'active';} ?>">
-          <a href="#">
-            <i class="fa fa-pie-chart"></i>
-            <span>Laporan</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li class="<?php if($judul=='Penjualan'){echo 'active';} ?>"><a href="<?=base_url('laporan/penjualan') ?>"><i class="fa fa-circle-o"></i> Penjualan</a></li>
-            <li class="<?php if($judul=='Stok'){echo 'active';} ?>"><a href="<?=base_url('laporan/stok') ?>"><i class="fa fa-circle-o"></i> Stok</a></li>
+            <li class="<?php if($judul=='Penjualan'){echo 'active';} ?>"><a href="<?=base_url('penjualan') ?>"><i class="fa fa-circle-o"></i> Penjualan</a></li>
+            <?php if($pengguna_masuk['level']==1){ ?>
+              <li class="<?php if($judul=='Stok Masuk'){echo 'active';} ?>"><a href="<?=base_url('stok/masuk') ?>"><i class="fa fa-circle-o"></i> Stok Masuk</a></li>
+              <li class="<?php if($judul=='Stok Keluar'){echo 'active';} ?>"><a href="<?=base_url('stok/keluar') ?>"><i class="fa fa-circle-o"></i> Stok Keluar</a></li>
+              <li class="<?php if($judul=='Pemasukan Lain'){echo 'active';} ?>"><a href="<?=base_url('pemasukan') ?>"><i class="fa fa-circle-o"></i> Pemasukan Lain</a></li>
+              <li class="<?php if($judul=='Pengeluaran'){echo 'active';} ?>"><a href="<?=base_url('pengeluaran') ?>"><i class="fa fa-circle-o"></i> Pengeluaran</a></li>
+            <?php } ?>
           </ul>
         </li>
         <?php if($pengguna_masuk['level']==1){ ?>
+          <li class="treeview <?php if($judul=='Laporan'){echo 'active';} ?>">
+            <a href="#">
+              <i class="fa fa-pie-chart"></i>
+              <span>Laporan</span>
+              <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+            </a>
+            <ul class="treeview-menu">
+              <li class="<?php if($subjudul=='Penjualan'){echo 'active';} ?>"><a href="<?=base_url('laporan/penjualan') ?>"><i class="fa fa-circle-o"></i> Penjualan</a></li>
+              <li class="<?php if($subjudul=='Stok'){echo 'active';} ?>"><a href="<?=base_url('laporan/stok') ?>"><i class="fa fa-circle-o"></i> Stok</a></li>
+              <li class="<?php if($subjudul=='Saldo Kas'){echo 'active';} ?>"><a href="<?=base_url('laporan/saldo') ?>"><i class="fa fa-circle-o"></i> Saldo Kas</a></li>
+            </ul>
+          </li>
           <li class="header">PENGATURAN</li>
           <li class="<?php if($judul=='Pengguna'){echo 'active';} ?>"><a href="<?=base_url('pengguna') ?>"><i class="fa fa-users"></i> <span>Pengguna</span></a></li>
+          <li class="<?php if($judul=='Pengaturan'){echo 'active';} ?>"><a href="<?=base_url('pengaturan') ?>"><i class="fa fa-gear"></i> <span>Pengaturan</span></a></li>
         <?php } ?>
       </ul>
     </section>
@@ -187,7 +198,7 @@
 
   <footer class="main-footer">
     <div class="pull-right hidden-xs">
-      <b>Versi</b> 1.0.0
+      <?=tgl_indoharitime(time()) ?> | <b>Versi</b> 1.0.0
     </div>
     <strong>Copyright &copy; <?=date('Y',time()) ?> <a href="https://rushjr.wordpress.com" target="_blank">Rush Jr. Studio</a>.</strong> All rights reserved.
   </footer>
@@ -195,7 +206,7 @@
 
 <!-- MODAL KELUAR -->
 <div class="modal fade" id="modalKeluar">
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-sm">
     <div class="modal-content">
       <div class="modal-header">
         <h4 class="modal-title">Konfirmasi Keluar</h4>
@@ -204,8 +215,8 @@
         <p class="text-center">Anda yakin ingin keluar dari aplikasi?</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default pull-left" data-dismiss="modal"><i class="fa fa-times"></i> Batal</button>
-        <a href="<?=base_url('auth/keluar') ?>" type="button" class="btn btn-danger"><i class="fa fa-sign-out"></i> Keluar</a>
+        <button type="button" class="btn btn-sm btn-flat btn-default pull-left" data-dismiss="modal"><i class="fa fa-times"></i> Batal</button>
+        <a href="<?=base_url('auth/keluar') ?>" type="button" class="btn btn-sm btn-flat btn-danger">Keluar <i class="fa fa-sign-out"></i></a>
       </div>
     </div>
   </div>
@@ -227,6 +238,9 @@
 <script src="<?=base_url()?>assets/bower_components/fastclick/lib/fastclick.js"></script>
 <script src="<?=base_url()?>assets/dist/js/adminlte.min.js"></script>
 <script src="<?=base_url()?>assets/dist/js/demo.js"></script>
+<script src="<?=base_url()?>assets/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="<?=base_url()?>assets/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+<script src="<?=base_url()?>assets/bower_components/select2/dist/js/select2.full.min.js"></script>
 <script>
   $(document).ready(function () {
     $('.sidebar-menu').tree()
@@ -295,6 +309,40 @@
     //Timepicker
     $('.timepicker').timepicker({
       showInputs: false
+    });
+
+    $('#table1').DataTable();
+    $('#table2').DataTable({
+      'paging'      : true,
+      'lengthChange': true,
+      'searching'   : true,
+      'ordering'    : false,
+      'info'        : false,
+      'autoWidth'   : true
+    });
+    $('#table3').DataTable({
+      'paging'      : true,
+      'lengthChange': false,
+      'searching'   : false,
+      'ordering'    : false,
+      'info'        : false,
+      'autoWidth'   : true
+    });
+    $('#table4').DataTable({
+      'paging'      : true,
+      'lengthChange': false,
+      'searching'   : false,
+      'ordering'    : false,
+      'info'        : false,
+      'autoWidth'   : true
+    });
+    $('#table5').DataTable({
+      'paging'      : true,
+      'lengthChange': false,
+      'searching'   : false,
+      'ordering'    : false,
+      'info'        : true,
+      'autoWidth'   : true
     })
   })
 </script>

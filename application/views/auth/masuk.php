@@ -10,8 +10,8 @@
   </div>
   <div class="row">
     <div class="col-xs-8">
-      <a href="<?=base_url('auth/lupa_sandi')?>">Lupa Kata Sandi</a><br>
-      <a href="<?=base_url('auth/daftar')?>" class="text-center">Daftar Pengguna Baru</a>
+      <a href="<?=base_url('lupa_sandi')?>">Lupa Kata Sandi</a><br>
+      <a href="<?=base_url('daftar')?>" class="text-center">Daftar Pengguna Baru</a>
     </div>
     <div class="col-xs-4">
       <button type="submit" name="masuk" id="masuk" class="btn btn-primary btn-block btn-flat">Masuk</button>

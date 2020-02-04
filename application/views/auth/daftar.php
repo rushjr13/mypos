@@ -22,8 +22,8 @@
   </div>
   <div class="row">
     <div class="col-xs-8">
-      <a href="<?=base_url('auth/lupa_sandi')?>">Lupa Kata Sandi</a><br>
-      <a href="<?=base_url('auth')?>" class="text-center">Sudah Punya Akun</a>
+      <a href="<?=base_url('lupa_sandi')?>">Lupa Kata Sandi</a><br>
+      <a href="<?=base_url('masuk')?>" class="text-center">Sudah Punya Akun</a>
     </div>
     <div class="col-xs-4">
       <button type="submit" name="daftar" id="daftar" class="btn btn-primary btn-block btn-flat">Daftar</button>

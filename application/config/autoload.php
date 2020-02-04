@@ -58,7 +58,7 @@ $autoload['packages'] = array();
 |
 |	$autoload['libraries'] = array('user_agent' => 'ua');
 */
-$autoload['libraries'] = array('template', 'database', 'session');
+$autoload['libraries'] = array('template', 'database', 'session', 'form_validation');
 
 /*
 | -------------------------------------------------------------------
@@ -89,7 +89,7 @@ $autoload['drivers'] = array();
 |
 |	$autoload['helper'] = array('url', 'file');
 */
-$autoload['helper'] = array('url', 'fungsi');
+$autoload['helper'] = array('url', 'form', 'fungsi');
 
 /*
 | -------------------------------------------------------------------
@@ -133,5 +133,15 @@ $autoload['language'] = array();
 |	$autoload['model'] = array('first_model' => 'first');
 */
 $autoload['model'] = array(
+	'Pengaturan_m'=>'pengaturan',
 	'Pengguna_m'=>'pengguna',
+	'Supplier_m'=>'supplier',
+	'Pelanggan_m'=>'pelanggan',
+	'Kategori_m'=>'kategori',
+	'Unit_m'=>'unit',
+	'Item_m'=>'item',
+	'Stok_m'=>'stok',
+	'Penjualan_m'=>'penjualan',
+	'Pemasukan_m'=>'pemasukan',
+	'Pengeluaran_m'=>'pengeluaran',
 );

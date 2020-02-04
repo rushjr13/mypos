@@ -6,8 +6,8 @@
   </div>
   <div class="row">
     <div class="col-xs-8">
-      <a href="<?=base_url('auth')?>">Sudah Punya Akun</a><br>
-      <a href="<?=base_url('auth/daftar')?>" class="text-center">Daftar Pengguna Baru</a>
+      <a href="<?=base_url('masuk')?>">Sudah Punya Akun</a><br>
+      <a href="<?=base_url('daftar')?>" class="text-center">Daftar Pengguna Baru</a>
     </div>
     <div class="col-xs-4">
       <button type="submit" class="btn btn-primary btn-block btn-flat">Kirim</button>
